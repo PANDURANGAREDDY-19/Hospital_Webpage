@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduranga Hospitals</title>
+    <style>
+        :root {
+            --primary-color: #005bab;
+            --secondary-color: #e63946;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hospital-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hospital-logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .hospital-name {
+            font-size: 24px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            padding-top: 80px;
+            z-index: 999;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 5px;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: var(--light-bg);
+            color: var(--primary-color);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-top: 80px;
+        }
+
+        .home-section {
+            position: relative;
+            height: calc(100vh - 80px); /* Full viewport height minus header */
+            display: flex;
+            overflow: hidden;
+        }
+
+        .diagonal-divider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, white 50%, transparent 50%);
+            z-index: 1;
+        }
+        .overview-section {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 50%;
+            z-index: 2;
+        }
+        
+        .hospital-image-section {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .hospital-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overview-content {
+            max-width: 600px;
+            margin-right: auto;
+        }
+
+        .overview-content h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            line-height: 1.2;
+        }
+
+        .overview-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        footer {
+            
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .home-section {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .diagonal-divider {
+                background: linear-gradient(180deg, white 50%, transparent 50%);
+            }
+
+            .hospital-image {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+
+            .overview-section {
+                max-width: 100%;
+                padding: 30px;
+                background: rgba(255, 255, 255, 0.9);
+            }
+
+            .hospital-image-section {
+                position: relative;
+                height: 300px;
+            }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="menu-toggle" onclick="toggleSidebar()">
+            ☰ Menu
+        </div>
+        <div class="hospital-brand">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxPGW0l6WxJac_ncSxjooEcUDaIJgeuaAulA&s" alt="Hospital Logo" class="hospital-logo">
+            <span class="hospital-name">Santhiram Medical College</span>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul class="nav-links">
+            <li><a href="Hospital.html">Home</a></li>
+            <li><a href="doctors.html">List of Doctors</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="appointment.html">Book Appointment</a></li>
+            <li><a href="#footer" class="footer-link">Customer Care</a></li>
+            <li><a href="#about">About Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="home-section">
+            <div class="hospital-image-section">
+                <img src="https://careerpaathshala.com/wp-content/uploads/2023/09/3-97.jpg" alt="Hospital Building" class="hospital-image">
+            </div>
+            <div class="diagonal-divider"></div>
+            <div class="overview-section">
+                <div class="overview-content">
+                    <h1>Welcome to Santhiram Hosptals</h1>
+                    <p>Leading the way in medical excellence with state-of-the-art facilities and expert healthcare professionals.</p>
+                    <p>Our commitment to providing exceptional patient care has made us one of the most trusted healthcare institutions in the region.</p>
+                    <ul>
+                        <li>24/7 Emergency Services</li>
+                        <li>Advanced Diagnostic Center</li>
+                        <li>Specialized Treatment Units</li>
+                        <li>Expert Medical Professionals</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+
+
+    <script>
+        // Sidebar Toggle Function
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+            const sidebar = document.querySelector('.sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close sidebar after clicking a link on mobile
+                    document.querySelector('.sidebar').classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <footer style="background-color: rgba(0, 0, 0, 0.9); color: white; padding: 40px 0; width: 100%;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <!-- Customer Care Section -->
+            <section style="padding: 20px;">
+                <h3 style="color: #005bab; margin-bottom: 20px;">Customer Care</h3>
+                <p>24/7 Emergency Helpline</p>
+                <p>📞 Emergency: 108</p>
+                <p>📞 Helpdesk: +91 8897277078</p>
+                <p>✉️ Email: kotte.pandurangareddy@gmail.com</p>
+            </section>
+    
+            <!-- Quick Links -->
+            <section style="padding: 20px;">
+                <h3 style="color: #005bab; margin-bottom: 20px;">Quick Links</h3>
+                <ul style="list-style: none;">
+                    <li><a href="Hospital.html" style ="color: white; text-decoration: none; line-height: 2;">Home</a></li>
+                    <li><a href="appointment.html" style="color: white; text-decoration: none; line-height: 2;">Book Appointment</a></li>
+                    <li><a href="#departments" style="color: white; text-decoration: none; line-height: 2;">Departments</a></li>
+                    <li><a href="#facilities" style="color: white; text-decoration: none; line-height: 2;">Facilities</a></li>
+                    <li><a href="doctors.html" style="color: white; text-decoration: none; line-height: 2;">Find a Doctor</a></li>
+                </ul>
+            </section>
+    
+            <!-- Location -->
+            <section style="padding: 20px;">
+                <h3 style="color: #005bab; margin-bottom: 20px;">Location</h3>
+                <p>Santhiram Medical College</p>
+                <p>NH-40, Nandyal</p>
+                <p>Andhra Pradesh, India</p>
+                <p>PIN: 518501</p>
+            </section>
+        </div>
+        
+        <!-- Copyright -->
+        <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px;">
+            <p>&copy; 2024 Santhiram Hospitals. All rights reserved.</p>
+        </div>
+    </footer>
+    <footer id="footer" style="background-color: rgba(0, 0, 0, 0.9); color: white; padding: 40px 0; width: 100%;">
+    <header id="header" style="background-color: rgba(0, 0, 0, 0.9); color: white; padding: 40px 0; width: 100%;">
+</body>
+</html>

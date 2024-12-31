@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Doctor Appointment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .appointment-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        select {
+            background-color: white;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            padding-top: 80px;
+            z-index: 999;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .hospital-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hospital-logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .hospital-name {
+            font-size: 24px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 5px;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: var(--light-bg);
+            color: var(--primary-color);
+        }
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="menu-toggle" onclick="toggleSidebar()">
+            ☰ Menu
+        </div>
+        <div class="hospital-brand">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxPGW0l6WxJac_ncSxjooEcUDaIJgeuaAulA&s" alt="Hospital Logo" class="hospital-logo">
+            <span class="hospital-name">Santhiram Medical College</span>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul class="nav-links">
+            <li><a href="Hospital.html">Home</a></li>
+            <li><a href="doctors.html">List of Doctors</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="appointment.html">Book Appointment</a></li>
+            <li><a href="#footer">Customer Care</a></li>
+            <li><a href="#about">About Us</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <form class="appointment-form" id="appointmentForm">
+            <h1>Book an Appointment</h1>
+            
+            <div class="form-group">
+                <label for="patientName">Full Name</label>
+                <input type="text" id="patientName" name="patientName" required>
+                <div class="error" id="nameError">Please enter your full name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+                <div class="error" id="phoneError">Please enter a valid phone number</div>
+            </div>
+
+            <div class="form-group">
+                <label for="doctor">Select Doctor</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="">Choose a doctor</option>
+                    <option value="dr-smith">Dr. Smith - Cardiologist</option>
+                    <option value="dr-johnson">Dr. Johnson - Pediatrician</option>
+                    <option value="dr-williams">Dr. Williams - Dermatologist</option>
+                    <option value="dr-brown">Dr. Brown - General Physician</option>
+                </select>
+                <div class="error" id="doctorError">Please select a doctor</div>
+            </div>
+
+            <div class="form-group">
+                <label for="appointmentDate">Preferred Date</label>
+                <input type="date" id="appointmentDate" name="appointmentDate" required>
+                <div class="error" id="dateError">Please select a valid date</div>
+            </div>
+
+            <div class="form-group">
+                <label for="appointmentTime">Preferred Time</label>
+                <select id="appointmentTime" name="appointmentTime" required>
+                    <option value="">Select time slot</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                </select>
+                <div class="error" id="timeError">Please select a time slot</div>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Reason for Visit</label>
+                <textarea id="reason" name="reason" required></textarea>
+                <div class="error" id="reasonError">Please provide a reason for your visit</div>
+            </div>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset errors
+            document.querySelectorAll('.error').forEach(error => error.style.display = 'none');
+            
+            let isValid = true;
+            
+            // Validate name
+            const name = document.getElementById('patientName').value.trim();
+            if (name.length < 3) {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone').value.trim();
+            const phoneRegex = /^\d{10}$/;
+            if (!phoneRegex.test(phone)) {
+                document.getElementById('phoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate date
+            const date = new Date(document.getElementById('appointmentDate').value);
+            const today = new Date();
+            if (date < today) {
+                document.getElementById('dateError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate other required fields
+            ['doctor', 'appointmentTime', 'reason'].forEach(field => {
+                if (!document.getElementById(field).value.trim()) {
+                    document.getElementById(`${field}Error`).style.display = 'block';
+                    isValid = false;
+                }
+            });
+            
+            if (isValid) {
+                alert('Appointment booked successfully! We will contact you shortly to confirm.');
+                this.reset();
+            }
+        });
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('appointmentDate').setAttribute('min', today);
+    </script>
+    <script>
+        // Sidebar Toggle Function
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+    
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+            const sidebar = document.querySelector('.sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+    
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close sidebar after clicking a link on mobile
+                    document.querySelector('.sidebar').classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <footer style="background-color: rgba(0, 0, 0, 0.9); color: white; padding: 40px 0; width: 100%;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <!-- Customer Care Section -->
+            <section style="padding: 20px;">
+                <h3 style="color: #005bab; margin-bottom: 20px;">Customer Care</h3>
+                <p>24/7 Emergency Helpline</p>
+                <p>📞 Emergency: 108</p>
+                <p>📞 Helpdesk: +91 8897277078</p>
+                <p>✉️ Email: kotte.pandurangareddy@gmail.com</p>
+            </section>
+    
+            <!-- Quick Links -->
+            <section style="padding: 20px;">
+                <h3 style="color: #005bab; margin-bottom: 20px;">Quick Links</h3>
+                <ul style="list-style: none;">
+                    <li><a href="Hospital.html" style ="color: white; text-decoration: none; line-height: 2;">Home</a></li>
+                    <li><a href="appointment.html" style="color: white; text-decoration: none; line-height: 2;">Book Appointment</a></li>
+                    <li><a href="#departments" style="color: white; text-decoration: none; line-height: 2;">Departments</a></li>
+                    <li><a href="#facilities" style="color: white; text-decoration: none; line-height: 2;">Facilities</a></li>
+                    <li><a href="doctors.html" style="color: white; text-decoration: none; line-height: 2;">Find a Doctor</a></li>
+                </ul>
+            </section>
+    
+            <!-- Location -->
+            <section style="padding: 20px;">
+                <h3 style="color: #005bab; margin-bottom: 20px;">Location</h3>
+                <p>Santhiram Medical College</p>
+                <p>NH-40, Nandyal</p>
+                <p>Andhra Pradesh, India</p>
+                <p>PIN: 518501</p>
+            </section>
+        </div>
+        
+        <!-- Copyright -->
+        <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px;">
+            <p>&copy; 2024 Santhiram Hospitals. All rights reserved.</p>
+        </div>
+    </footer>
+    <footer id="footer" style="background-color: rgba(0, 0, 0, 0.9); color: white; padding: 40px 0; width: 100%;">
+</body>
+</html>
